@@ -12,6 +12,7 @@ import java.time.format.TextStyle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +32,7 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 		private JButton btAnnuler = new JButton("Annuler");
 		private JButton btValider = new JButton("Valider");
 		
+		private JComboBox categorieUser;
 		private JLabel lbtitre = new JLabel("Espace Connexion", SwingConstants.CENTER);
 
 		
@@ -56,7 +58,7 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 			Font myFont = new Font("Serif", Font.BOLD, 24);
 			
 			this.unPanel.setBackground(Color.LIGHT_GRAY);
-			this.unPanel.setLayout(new GridLayout(8,3,5,5));
+			this.unPanel.setLayout(new GridLayout(4,3,5,5));
 			this.unPanel.add(new JLabel());
 			this.unPanel.add(new JLabel());
 			this.unPanel.add(new JLabel());
@@ -71,9 +73,15 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 			this.unPanel.add(new JLabel());
 			this.btAnnuler.setBackground(Color.white);
 			this.btValider.setBackground(Color.white);
+			Object[] elements = new Object[]{"admin", "prof"};
+			 
+			categorieUser = new JComboBox(elements);
+	 
+			this.unPanel.add(categorieUser);
+			this.unPanel.add(new JLabel());
 			this.unPanel.add(this.btAnnuler);
 			this.unPanel.add(this.btValider);	
-			this.unPanel.add(new JLabel());
+			
 			this.unPanel.setVisible(true);
 			
 			this.add(this.unPanel);
@@ -96,18 +104,34 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 			}
 			else if(e.getSource() == this.btValider)
 			{
+				String resultat[] ;
 				String email = this.tfemail.getText();
 				String mdp = new String (this.tfMdp.getPassword());
-				String resultat[] = Modele_Prof.verifConnexion(email, mdp);
+				String listeSelect = (String) this.categorieUser.getSelectedItem();
+				if(listeSelect.equals("prof"))
+				{
+				 resultat = Modele_Prof.verifConnexionProf(email, mdp);
+				}
+				else
+				{
+					 resultat = Modele_Admin.verifConnexion(email, mdp);
+				}
+				
 				
 				if(resultat[0]==null)
 				{
 					JOptionPane.showMessageDialog(this, "Verifier vos identifiants");				
 				}
-				else 
+				else if(listeSelect.equals("prof"))
 				{
-					JOptionPane.showMessageDialog(this, "Bonjour" + "   " + resultat[1] + "   " +resultat[2]);
+					JOptionPane.showMessageDialog(this, "Bonjour professeur" + "   " + resultat[1] + "   " +resultat[2]);
 					new Vue_Prof();
+					this.dispose();
+				}
+				else if(listeSelect.equals("admin"))
+				{
+					JOptionPane.showMessageDialog(this, "Bonjour administrateur" + "   " + resultat[1] + "   " +resultat[2]);
+					new Vue_Admin();
 					this.dispose();
 				}
 			}
