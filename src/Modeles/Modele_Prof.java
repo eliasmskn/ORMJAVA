@@ -2,8 +2,10 @@ package Modeles;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.LinkedList;
+import javax.swing.JOptionPane;
 import com.mysql.jdbc.Statement;
+import Controleurs.Prof;
 
 public class Modele_Prof 
 {		
@@ -38,6 +40,147 @@ public class Modele_Prof
 				}
 				unModele.connexion();
 				return resultat;
+			}
+			
+			
+			
+			public static void insertionProf(Prof unP)
+			{
+				String requete ="Insert into professeur ("
+						+ "id_prof, nom, prenom, "
+						+ "identifiant, mdp"
+						+ ") values ("
+						+ "'"+unP.getNom()
+						+ "', '"+unP.getPrenom()+"', '"+unP.getIdentifiant()
+						+ "', '"+unP.getMdp()+"');";
+					
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+					unStat.execute(requete);
+					unStat.close();
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreur de la requete :"+ exp +requete);
+				}
+				unModele.deconnexion();
+						
+			}
+			
+			public static void modificationCandidat(Prof unP)
+			{
+				String requete ="Update professeur"
+						+ " set nom = '" + unP.getNom() + "',"
+						+ " prenom = '" + unP.getPrenom() + "', "
+						+ " identifiant = '" + unP.getIdentifiant() + "', "
+						+ " mdp = '" + unP.getMdp() + "' "
+						+ " where id_prof = '" + unP.getId_prof() + "' ;";
+					
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+					unStat.execute(requete);
+					unStat.close();
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreur de la requete :"+ exp +requete);
+				}
+				unModele.deconnexion();
+						
+			}
+			
+			public static LinkedList<Prof> selectall()
+			{
+				String requete ="Select * from professeur;";
+				LinkedList<Prof> uneListe = new LinkedList<Prof>();
+				
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+					
+					ResultSet unRes = unStat.executeQuery(requete);
+					
+					while(unRes.next())
+					{
+						int id_prof = unRes.getInt("id_prof");
+						String nom = unRes.getString("nom");
+						String prenom = unRes.getString("prenom");
+						String identifiant = unRes.getString("identifiant");
+						String mdp = unRes.getString("mdp");
+						Prof unP = new Prof(id_prof, nom, prenom, identifiant, mdp);
+						uneListe.add(unP);
+					}
+					unStat.close();
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreure :"+ exp);
+				}
+				unModele.deconnexion();
+				return uneListe;		
+			}
+			
+			public static Prof selectwhere(int id_prof)	
+			{
+				String requete ="Select * from professeur where id_prof = '"+id_prof+"';";
+				Prof unP = null;
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+					
+					ResultSet unRes = unStat.executeQuery(requete);
+					
+					if(unRes.next())
+					{
+						String nom = unRes.getString("nom");
+						String prenom = unRes.getString("prenom");
+						String identifiant = unRes.getString("identifiant");
+						String mdp = unRes.getString("mdp");
+						unP = new Prof(id_prof, nom, prenom, identifiant, mdp);
+					}
+					
+					unStat.close();
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+				}
+				unModele.deconnexion();
+				return unP;		
+			}
+			
+			public static int delete(String cle)	
+			{
+				String requete ="delete from professeur where "
+								+ " id_prof = "+cle+";";
+				
+				String requete2 = "Select count(id_prof) as nb "
+								+ " from professeur where "
+								+ " id_prof = "+cle+";";
+				int nb = 0;
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();			
+					ResultSet  unRes = unStat.executeQuery(requete2);
+					unRes.next();
+					nb =  unRes.getInt("nb");
+					unStat.execute(requete);
+					unStat.close();
+						
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreure :"+ exp);
+				}
+				unModele.deconnexion();
+				return nb;		
 			}
 
 }

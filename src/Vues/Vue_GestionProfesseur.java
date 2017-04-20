@@ -25,6 +25,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Controleurs.Prof;
+import Modeles.Modele_Prof;
+
 
 public class Vue_GestionProfesseur extends JFrame implements ActionListener 
 {		
@@ -48,7 +51,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 			private JPanel paneltitreaffichemoniteur = new JPanel();
 			
 			private JLabel lbTitre = new JLabel("Espace Admin");
-			private JLabel lbMenu = new JLabel("Menu gestion planning");
+			private JLabel lbMenu = new JLabel("Menu gestion professeur");
 			private JLabel uneImage = new JLabel(new ImageIcon("staff.png"));
 			private JButton btLister = new JButton(new ImageIcon("list.png"));
 			private JButton btModifier = new JButton(new ImageIcon("edit.png"));
@@ -89,7 +92,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 			
 			private JLabel lbtitrearech = new JLabel("Recherche de professeur");
 			private JButton btOk = new JButton("OK");
-			private JComboBox cbxMoniteurs = new JComboBox<>();
+			private JComboBox cbxProf = new JComboBox<>();
 			private JTextArea txtRecherche = new JTextArea();
 				
 			// panel supprimer
@@ -149,7 +152,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.paneldefaut.setBorder(BorderFactory.createLineBorder(Color.black));
 				this.paneldefaut.setBackground(Color.white);
 				this.paneldefaut.setLayout(null);
-				this.uneImage.setBounds(750, 20, 200, 200);
+				this.uneImage.setBounds(750, 120, 200, 200);
 				this.paneldefaut.add(this.uneImage);
 				this.paneldefaut.setVisible(true);
 //				this.paneldefaut.add(this.panelaffichemoniteur);
@@ -333,8 +336,8 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.panelRechercher.setBounds(570, 300, 1000, 500);
 				this.panelRechercher.setBorder(BorderFactory.createLineBorder(Color.black));
 				this.panelRechercher.setLayout(null);
-				this.cbxMoniteurs.setBounds(375, 50, 200, 20);
-				this.panelRechercher.add(this.cbxMoniteurs);
+				this.cbxProf.setBounds(375, 50, 200, 20);
+				this.panelRechercher.add(this.cbxProf);
 				this.btOk.setBounds(580, 50, 100, 20);
 				this.btOk.setBackground(Color.white);
 				this.panelRechercher.add(this.btOk);
@@ -376,10 +379,220 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.setVisible(true);
 				
 			}
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
+				
+			 
+			 private void remplirCBX() 
+				{
+					// remplire le comboBox
 					
+					LinkedList<Prof> uneListe = Modele_Prof.selectall();
+					this.cbxProf.removeAllItems();
+					for(Prof unP : uneListe)
+					{
+						this.cbxProf.addItem(unP.getId_prof()+" - "+unP.getNom());
+					}
+				}
+				
+
+
+
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					if(e.getSource() == this.btQuitter)
+					{
+						if(JOptionPane.showConfirmDialog(this, "Voulez-vous quitter l'espace gestion candidat ?","Quitter", JOptionPane.OK_CANCEL_OPTION)== 0)
+						{
+							this.dispose();
+							new Vue_Admin();
+						}
+					}
+					else if(e.getSource() == this.btAjouter)
+					{
+						this.panelAjouter.setVisible(true);
+						this.panelModifier.setVisible(false);
+						this.paneltitreajout.setVisible(true);
+						this.panelLister.setVisible(false);
+						this.panelRechercher.setVisible(false);
+						this.panelSupprimer.setVisible(false);
+						this.paneltitremodif.setVisible(false);
+						this.paneltitrelister.setVisible(false);
+						this.paneltitrearech.setVisible(false);
+						this.paneltitreasupp.setVisible(false);
+						this.paneldefaut.setVisible(false);
+						
+						
+					}
+					else if(e.getSource() == this.btModifier)
+					{
+						this.panelModifier.setVisible(true);
+						this.panelAjouter.setVisible(false);
+						this.paneltitremodif.setVisible(true);
+						this.panelLister.setVisible(false);
+						this.panelRechercher.setVisible(false);
+						this.panelSupprimer.setVisible(false);
+						this.paneltitrelister.setVisible(false);
+						this.paneltitrearech.setVisible(false);
+						this.paneltitreasupp.setVisible(false);
+						this.paneldefaut.setVisible(false);
+						
+						
+					}
+					else if(e.getSource() == this.btLister)
+					{
+						this.paneltitreajout.setVisible(false);
+						this.panelAjouter.setVisible(false);
+						this.panelModifier.setVisible(false);
+						this.panelLister.setVisible(true);
+						this.panelRechercher.setVisible(false);
+						this.panelSupprimer.setVisible(false);
+						this.paneltitrelister.setVisible(true);
+						this.paneltitrearech.setVisible(false);
+						this.paneltitremodif.setVisible(false);
+						this.paneltitreasupp.setVisible(false);
+						this.paneldefaut.setVisible(false);
+						
+						// instansation de la jtable
+						
+						LinkedList<Prof> uneListe = Modele_Prof.selectall();
+						String titres[] = {"id_prof","Nom","Prenom","Identifiant","Mdp"};
+						Object donnees [][] = new Object[uneListe.size()][11];
+						int i = 0;
+						for(Prof unP : uneListe)
+						{
+							donnees[i][0] = unP.getId_prof();
+							donnees[i][1] = unP.getNom();
+							donnees[i][2] = unP.getPrenom();
+							donnees[i][3] = unP.getIdentifiant();
+							donnees[i][4] = unP.getMdp();
+							i++;
+						}
+						this.uneTable = new JTable(donnees,titres);
+						JScrollPane uneScroll = new JScrollPane(this.uneTable);
+						uneScroll.setBounds(0,0,1200,600);
+						uneScroll.setVisible(true);
+						this.panelLister.add(uneScroll);
+						
+					}
+					else if(e.getSource() == this.btRechercher)
+					{
+						this.remplirCBX();
+						this.panelAjouter.setVisible(false);
+						this.panelLister.setVisible(false);
+						this.panelRechercher.setVisible(true);
+						this.panelSupprimer.setVisible(false);
+						this.paneltitrelister.setVisible(false);
+						this.paneltitreajout.setVisible(false);
+						this.paneltitremodif.setVisible(false);
+						this.panelModifier.setVisible(false);
+						this.paneltitrearech.setVisible(true);
+						this.paneltitreasupp.setVisible(false);
+						this.paneldefaut.setVisible(false);
+						
+					}
+					else if(e.getSource() == this.btSupprimer)
+					{
+						this.panelAjouter.setVisible(false);
+						this.panelLister.setVisible(false);
+						this.panelRechercher.setVisible(false);
+						this.panelSupprimer.setVisible(true);	
+						this.panelModifier.setVisible(false);
+						this.paneltitrelister.setVisible(false);
+						this.paneltitreajout.setVisible(false);
+						this.paneltitremodif.setVisible(false);
+						this.paneltitrearech.setVisible(false);
+						this.paneltitreasupp.setVisible(true);
+						this.paneldefaut.setVisible(false);
+					}
+					
+					else if(e.getSource() == this.btAnnuler)
+					{
+						this.tfIdprof.setText("");
+						this.tfNom.setText("");
+						this.tfPrenom.setText("");
+						this.tfIdentifiant.setText("");
+						this.tfMdp.setText("");
+					}
+					else if(e.getSource() == this.btAnnuler1)
+					{
+						this.tfIdprof1.setText("");
+						this.tfNom1.setText("");
+						this.tfPrenom1.setText("");
+						this.tfIdentifiant1.setText("");
+						this.tfMdp.setText("");
+					}
+					else if(e.getSource() == this.btEnregistrer)
+					{
+						Boolean ok = true;
+						
+						int id_prof = 0;
+						String nom = this.tfNom.getText();
+						String prenom = this.tfPrenom.getText();
+						String identifiant = this.tfIdentifiant.getText();
+						String mdp = this.tfMdp.getText();
+						
+						//verifier les autres champs et mettre ok à false
+						
+						if(ok)
+						{	
+							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
+							Modele_Prof.insertionProf(unProf);
+							JOptionPane.showMessageDialog(null, "Insertion reussi");
+							this.tfIdprof.setText("");
+							this.tfNom.setText("");
+							this.tfPrenom.setText("");
+							this.tfIdentifiant.setText("");
+							this.tfMdp.setText("");
+							this.panelAjouter.setVisible(false);
+						}
+					}
+					else if(e.getSource() == this.btMaj)
+					{
+						Boolean ok = true;
+						
+						int id_prof = Integer.parseInt(this.tfIdprof1.getText());
+						String nom = this.tfNom1.getText();
+						String prenom = this.tfPrenom1.getText();
+						String identifiant = this.tfIdentifiant1.getText();
+						String mdp = this.tfMdp1.getText();
+						
+						//verifier les autres champs et mettre ok à false
+						
+						if(ok)
+						{	
+							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
+							Modele_Prof.modificationCandidat(unProf);
+							JOptionPane.showMessageDialog(null, "Modification reussi");
+							this.tfIdprof1.setText("");
+							this.tfNom1.setText("");
+							this.tfPrenom1.setText("");
+							this.tfIdentifiant1.setText("");
+							this.tfMdp1.setText("");
+							this.panelAjouter.setVisible(false);
+						}
+					}
+					
+					else if(e.getSource() == this.btFermer)
+					{
+						this.panelLister.setVisible(false);
+					}
+					else if(e.getSource() == this.btOk)
+					{
+						
+						String chaine = this.cbxProf.getSelectedItem().toString();
+						String tab[] = chaine.split(" - "); // explode
+						Prof unP = Modele_Prof.selectwhere(Integer.parseInt(tab[0]));
+						this.txtRecherche.setText(unP.toString());
+						this.txtRecherche.setEditable(false);
+					}
+				
+					else if(e.getSource() == this.btSupp)
+					{
+						String cle = this.tfCle.getText();
+						int nb = Modele_Prof.delete(cle);
+						this.lbResultat.setText("Les Candidats supprimés sont :" +nb);
+						
+					}
 				}
 			
 			}
