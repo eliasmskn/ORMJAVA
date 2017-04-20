@@ -31,8 +31,8 @@ public class Vue_Admin extends JFrame implements ActionListener
 	private JPanel panelCentral = new JPanel();
 	private JPanel paneltitreaccueil = new JPanel();
 	
-	private JLabel lbtitreaccueil = new JLabel("Page d'accueil");
-	private JLabel lbtitre = new JLabel("CASTELLANE - AUTO");
+	private JLabel lbtitreaccueil = new JLabel("Espace Admin");
+	private JLabel lbtitre = new JLabel("Gestion - Planning");
 	private JLabel lbmenu = new JLabel("Menu Principal", SwingConstants.CENTER);
 	private JButton btGestionSalle = new JButton("Gestion Salles");
 	private JButton btGestionCour = new JButton("Gestion Cours");
