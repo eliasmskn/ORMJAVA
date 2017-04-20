@@ -107,7 +107,7 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 				else 
 				{
 					JOptionPane.showMessageDialog(this, "Bonjour" + "   " + resultat[1] + "   " +resultat[2]);
-					new Vue_Prof();
+					new Vue_Admin();
 					this.dispose();
 				}
 			}
