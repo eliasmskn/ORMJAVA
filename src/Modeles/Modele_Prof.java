@@ -8,11 +8,12 @@ import com.mysql.jdbc.Statement;
 public class Modele_Prof 
 {		
 
-			public static String [] verifConnexion(String email, String mdp)
+		
+			public static String [] verifConnexionProf(String identifiant, String mdp)
 			{
 				String resultat [] = new String[3];
 				String requete = "Select count(identifiant) as nb, nom, prenom"
-						+ " from professeur where identifiant ='"+email
+						+ " from professeur where identifiant ='"+identifiant
 						+"' and mdp ='"+mdp+"';";
 				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 				unModele.changerPilot();
