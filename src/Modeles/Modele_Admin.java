@@ -14,7 +14,7 @@ public class Modele_Admin {
 			String requete = "Select count(mailadmin) as nb, nomadmin, prenomadmin"
 					+ " from admin where mailadmin ='"+email
 					+"' and mdpadmin ='"+mdp+"';";
-			Modele unModele = new Modele("127.0.0.1", "gestion_planning", "elias", "");
+			Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 			unModele.changerPilot();
 			unModele.connexion();
 			try

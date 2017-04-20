@@ -59,5 +59,5 @@ create table Admin(
 	prenom varchar(100) not null,
 	identifiant varchar(100) not null,
 	mdp varchar(55) not null,
-	primary key (id_admi)
+	primary key (id_admin)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
