@@ -58,7 +58,7 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 			Font myFont = new Font("Serif", Font.BOLD, 24);
 			
 			this.unPanel.setBackground(Color.LIGHT_GRAY);
-			this.unPanel.setLayout(new GridLayout(4,3,5,5));
+			this.unPanel.setLayout(new GridLayout(9,4,5,5));
 			this.unPanel.add(new JLabel());
 			this.unPanel.add(new JLabel());
 			this.unPanel.add(new JLabel());
@@ -76,8 +76,9 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 			Object[] elements = new Object[]{"admin", "prof"};
 			 
 			categorieUser = new JComboBox(elements);
-	 
+			this.unPanel.add(new JLabel("Catégorie :", SwingConstants.CENTER));
 			this.unPanel.add(categorieUser);
+			this.unPanel.add(new JLabel());
 			this.unPanel.add(new JLabel());
 			this.unPanel.add(this.btAnnuler);
 			this.unPanel.add(this.btValider);	
