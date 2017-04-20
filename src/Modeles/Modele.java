@@ -50,7 +50,7 @@ public class Modele
 			}
 			
 		} catch (SQLException exp) {
-			System.out.println("Erreure de fermeture de la connexion"+ exp);
+			System.out.println("Erreur de fermeture de la connexion"+ exp);
 		}
 	}
 	
