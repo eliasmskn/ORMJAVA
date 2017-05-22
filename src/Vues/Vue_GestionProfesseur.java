@@ -426,7 +426,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						
 						// instansation de la jtable
 						
-						LinkedList<Prof> uneListe = Modele_Admin.selectall();
+						LinkedList<Prof> uneListe = Modele_Prof.selectall();
 						String titres[] = {"id_prof","Nom","Prenom","Identifiant","Mdp"};
 						Object donnees [][] = new Object[uneListe.size()][5];
 						int i = 0;
@@ -508,7 +508,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						if(ok)
 						{	
 							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Admin.insertionProf(unProf);
+							Modele_Prof.insertionProf(unProf);
 							JOptionPane.showMessageDialog(null, "Insertion reussi");
 							this.tfIdprof.setText("");
 							this.tfNom.setText("");
@@ -533,7 +533,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						if(ok)
 						{	
 							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Admin.modificationProf(unProf);
+							Modele_Prof.modificationProf(unProf);
 							JOptionPane.showMessageDialog(null, "Modification reussi");
 							this.tfIdprof1.setText("");
 							this.tfNom1.setText("");
@@ -561,7 +561,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 					else if(e.getSource() == this.btSupp)
 					{
 						String cle = this.tfCle.getText();
-						int nb = Modele_Admin.delete(cle);
+						int nb = Modele_Prof.delete(cle);
 						this.lbResultat.setText("Les Candidats supprimés sont :" +nb);
 						
 					}

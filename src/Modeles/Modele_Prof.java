@@ -3,8 +3,11 @@ package Modeles;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+
 import javax.swing.JOptionPane;
+
 import com.mysql.jdbc.Statement;
+
 import Controleurs.Prof;
 import Modeles.Modele;
 
@@ -106,6 +109,89 @@ public class Modele_Prof
 				unModele.deconnexion();
 				return unP;		
 			}
+			
+			public static void insertionProf(Prof unP)
+			{
+				String requete ="Insert into professeur ("
+						+ "nom, prenom, "
+						+ "identifiant, mdp"
+						+ ") values ("
+						+ "'"+unP.getNom()
+						+ "', '"+unP.getPrenom()+"','"+unP.getIdentifiant()
+						+ "', '"+unP.getMdp()+"');";
+				
+				System.out.println(requete);
+				
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+					unStat.execute(requete);
+					unStat.close();
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreur de la requete :"+ exp +requete);
+				}
+				unModele.deconnexion();
+						
+			}
+			
+			public static void modificationProf(Prof unP)
+			{
+				String requete ="Update professeur"
+						+ " set nom = '" + unP.getNom() + "',"
+						+ " prenom = '" + unP.getPrenom() + "', "
+						+ " identifiant = '" + unP.getIdentifiant() + "', "
+						+ " mdp = '" + unP.getMdp() + "' "
+						+ " where id_prof = '" + unP.getId_prof() + "' ;";
+					
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+					unStat.execute(requete);
+					unStat.close();
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreur de la requete :"+ exp +requete);
+				}
+				unModele.deconnexion();
+						
+			}
+			
+			
+			
+			public static int delete(String cle)	
+			{
+				String requete ="delete from professeur where "
+								+ " id_prof = "+cle+";";
+				
+				String requete2 = "Select count(id_prof) as nb "
+								+ " from professeur where "
+								+ " id_prof = "+cle+";";
+				int nb = 0;
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.connexion();
+				try{
+					java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();			
+					ResultSet  unRes = unStat.executeQuery(requete2);
+					unRes.next();
+					nb =  unRes.getInt("nb");
+					unStat.execute(requete);
+					unStat.close();
+						
+				}
+				catch (SQLException exp)
+				{
+					JOptionPane.showMessageDialog(null, "Erreure :"+ exp);
+				}
+				unModele.deconnexion();
+				return nb;		
+			}
+
+
 			
 
 }
