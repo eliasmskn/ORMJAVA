@@ -10,6 +10,6 @@ public class Controleur_principal {
 	
 	public static void main(String[] args) 
 	{
-		new Vue_GestionClasse();
+		new Vue_Connexion();
 	}
 }

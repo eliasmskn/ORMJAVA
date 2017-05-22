@@ -20,7 +20,14 @@ public class Classe
 		this.nb_eleve = nb_eleve;
 		this.niveau = niveau;
 	}
-
+	
+	public String toString()
+	{
+		return "\n Id Classe:"+this.id_classe+
+				"\n Nb Eleves :"+this.nb_eleve+
+				"\n Niveau :"+this.niveau;
+	}
+	
 	public int getId_classe() {
 		return id_classe;
 	}

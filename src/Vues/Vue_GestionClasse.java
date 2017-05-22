@@ -51,7 +51,7 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 			private JPanel paneltitrearech = new JPanel();
 			
 			private JLabel lbTitre = new JLabel("Espace Admin");
-			private JLabel lbMenu = new JLabel("Menu gestion professeur");
+			private JLabel lbMenu = new JLabel("Menu gestion classe");
 			private JLabel uneImage = new JLabel(new ImageIcon("staff.png"));
 			private JButton btLister = new JButton(new ImageIcon("list.png"));
 			private JButton btModifier = new JButton(new ImageIcon("edit.png"));
@@ -88,7 +88,7 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 			
 			private JLabel lbtitrearech = new JLabel("Recherche de classe");
 			private JButton btOk = new JButton("OK");
-			private JComboBox cbxProf = new JComboBox<>();
+			private JComboBox cbxClasse = new JComboBox<>();
 			private JTextArea txtRecherche = new JTextArea();
 				
 			// panel supprimer
@@ -296,8 +296,8 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 				this.panelRechercher.setBounds(570, 300, 1000, 500);
 				this.panelRechercher.setBorder(BorderFactory.createLineBorder(Color.black));
 				this.panelRechercher.setLayout(null);
-				this.cbxProf.setBounds(375, 50, 200, 20);
-				this.panelRechercher.add(this.cbxProf);
+				this.cbxClasse.setBounds(375, 50, 200, 20);
+				this.panelRechercher.add(this.cbxClasse);
 				this.btOk.setBounds(580, 50, 100, 20);
 				this.btOk.setBackground(Color.white);
 				this.panelRechercher.add(this.btOk);
@@ -346,10 +346,10 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 					// remplire le comboBox
 					
 					LinkedList<Classe> uneListe = Modele_Classe.selectall();
-					this.cbxProf.removeAllItems();
+					this.cbxClasse.removeAllItems();
 					for(Classe uneC : uneListe)
 					{
-						this.cbxProf.addItem(uneC.getId_classe()+" - "+uneC.getNb_eleve());
+						this.cbxClasse.addItem(uneC.getId_classe()+" - "+uneC.getNiveau());
 					}
 				}
 				
@@ -525,7 +525,7 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 					else if(e.getSource() == this.btOk)
 					{
 						
-						String chaine = this.cbxProf.getSelectedItem().toString();
+						String chaine = this.cbxClasse.getSelectedItem().toString();
 						String tab[] = chaine.split(" - "); // explode
 						Classe uneC = Modele_Classe.selectwhere(Integer.parseInt(tab[0]));
 						this.txtRecherche.setText(uneC.toString());

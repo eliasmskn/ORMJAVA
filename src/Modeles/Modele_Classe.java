@@ -46,30 +46,29 @@ public class Modele_Classe {
 	public static Classe selectwhere(int idclasse)	
 	{
 		String requete ="Select * from classe where id_classe = '"+idclasse+"';";
-		Classe unP = null;
+		Classe uneC = null;
 		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
 		try{
 			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
 			
 			ResultSet unRes = unStat.executeQuery(requete);
-			
 			if(unRes.next())
 			{
 				int id_classe = unRes.getInt("id_classe");
 				int nb_eleve = unRes.getInt("nb_eleve");
 				String niveau = unRes.getString("niveau");
-				unP = new Classe(id_classe, nb_eleve, niveau);
+				uneC = new Classe(id_classe, nb_eleve, niveau);
 			}
 			
 			unStat.close();
 		}
 		catch (SQLException exp)
 		{
-			JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+			JOptionPane.showMessageDialog(null, "Erreur :"+ exp + requete);
 		}
 		unModele.deconnexion();
-		return unP;		
+		return uneC;		
 	}
 	
 	public static void insertionClasse(Classe uneC)
@@ -79,7 +78,6 @@ public class Modele_Classe {
 				+ ") values ("
 				+ "'"+uneC.getNb_eleve()
 				+ "', '"+uneC.getNiveau()+"');";
-		System.out.println(requete);
 			
 		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
