@@ -78,7 +78,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				private JTextField tfPrenom1 = new JTextField();
 				private JTextField tfIdentifiant1 = new JTextField();
 				private JTextField tfMdp1 = new JTextField();
-				private JButton btMaj = new JButton("Mettre à jour");
+				private JButton btMaj = new JButton("Mettre Ã  jour");
 				private JButton btAnnuler1 = new JButton("Annuler");
 				
 				
@@ -503,7 +503,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						String identifiant = this.tfIdentifiant.getText();
 						String mdp = this.tfMdp.getText();
 						
-						//verifier les autres champs et mettre ok à false
+						//verifier les autres champs et mettre ok Ã  false
 						
 						if(ok)
 						{	
@@ -528,7 +528,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						String identifiant = this.tfIdentifiant1.getText();
 						String mdp = this.tfMdp1.getText();
 						
-						//verifier les autres champs et mettre ok à false
+						//verifier les autres champs et mettre ok Ã  false
 						
 						if(ok)
 						{	
@@ -561,9 +561,10 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 					else if(e.getSource() == this.btSupp)
 					{
 						String cle = this.tfCle.getText();
+
 						int nb = Modele_Prof.delete(cle);
 						this.lbResultat.setText("Les Candidats supprimés sont :" +nb);
-						
+	
 					}
 				}
 			
