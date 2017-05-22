@@ -27,6 +27,8 @@ import javax.swing.SwingConstants;
 
 import Controleurs.Prof;
 import Modeles.Modele_Prof;
+import Modeles.Modele_Admin;
+import Modeles.Modele;
 
 
 public class Vue_GestionProfesseur extends JFrame implements ActionListener 
@@ -47,8 +49,6 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 			private JPanel paneltitrelister = new JPanel();
 			private JPanel paneltitreasupp = new JPanel();
 			private JPanel paneltitrearech = new JPanel();
-			private JPanel panelaffichemoniteur = new JPanel();
-			private JPanel paneltitreaffichemoniteur = new JPanel();
 			
 			private JLabel lbTitre = new JLabel("Espace Admin");
 			private JLabel lbMenu = new JLabel("Menu gestion professeur");
@@ -124,25 +124,8 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.panelTitre.setVisible(true);
 				this.add(this.panelTitre);
 				
-				
-//				// construction du panel titre Affiche moniteur
-//				
-						Font TA = new Font("Serif", Font.PLAIN, 30);
-//						this.paneltitreaffichemoniteur.setBounds(650, 250, 350, 50);
-//						this.paneltitreaffichemoniteur.setBackground(Color.lightGray);
-//						this.paneltitreaffichemoniteur.setLayout(new FlowLayout());
-//						this.paneltitreaffichemoniteur.add(this.lbtitreaffichemon);
-//						this.paneltitreaffichemoniteur.setVisible(true);
-				
-				
-//				
-//				// construction du panel Affiche Moniteur
-//				
-//						this.panelaffichemoniteur.setBounds(520, 350, 600, 450);
-//						this.panelaffichemoniteur.setBorder(BorderFactory.createLineBorder(Color.black));
-//						this.panelaffichemoniteur.setBackground(Color.LIGHT_GRAY);
-//						this.panelaffichemoniteur.setLayout(null);
-//						this.panelaffichemoniteur.setVisible(true);
+								
+				Font TA = new Font("Serif", Font.PLAIN, 30);
 				
 				
 				// construction du panel Central par defaut
@@ -155,17 +138,10 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.uneImage.setBounds(750, 120, 200, 200);
 				this.paneldefaut.add(this.uneImage);
 				this.paneldefaut.setVisible(true);
-//				this.paneldefaut.add(this.panelaffichemoniteur);
-//				this.paneldefaut.add(this.paneltitreaffichemoniteur, SwingConstants.CENTER);
 				this.add(this.paneldefaut);
 				
 				
-				
-				
-				
-				
-				
-				
+	
 				
 				// construction du panel menu
 				
@@ -227,15 +203,12 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.panelAjouter.setLayout(new GridLayout(15, 2));
 				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel());
-				this.panelAjouter.add(new JLabel());
-				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel("Nom Professeur :", SwingConstants.CENTER));
 				this.panelAjouter.add(this.tfNom);	
 				this.panelAjouter.add(new JLabel("Prenom Professeur :", SwingConstants.CENTER));
 				this.panelAjouter.add(this.tfPrenom);
-				this.panelAjouter.add(new JLabel("Adresse Professeur:", SwingConstants.CENTER));
+				this.panelAjouter.add(new JLabel("Identifiant Professeur:", SwingConstants.CENTER));
 				this.panelAjouter.add(this.tfIdentifiant);	
-				this.panelAjouter.add(new JLabel("Identifiant Professeur :", SwingConstants.CENTER));
 				this.panelAjouter.add(new JLabel("Mdp Professeur :", SwingConstants.CENTER));
 				this.panelAjouter.add(this.tfMdp);
 				this.panelAjouter.add(new JLabel());
@@ -263,22 +236,21 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 				this.paneltitremodif.setVisible(false);
 								
 						
-				// construction panel ajouter
+				// construction panel modif
 				
 				this.panelModifier.setBounds(470, 300, 1200, 600);
 				this.panelModifier.setBorder(BorderFactory.createLineBorder(Color.black));
 				this.panelModifier.setLayout(new GridLayout(15, 2));
 				this.panelModifier.add(new JLabel());
 				this.panelModifier.add(new JLabel());
-				this.panelModifier.add(new JLabel("Num Professeur :", SwingConstants.CENTER));
+				this.panelModifier.add(new JLabel("Id Professeur :", SwingConstants.CENTER));
 				this.panelModifier.add(this.tfIdprof1);
 				this.panelModifier.add(new JLabel("Nom Professeur :", SwingConstants.CENTER));
 				this.panelModifier.add(this.tfNom1);	
 				this.panelModifier.add(new JLabel("Prenom Professeur :", SwingConstants.CENTER));
 				this.panelModifier.add(this.tfPrenom1);
-				this.panelModifier.add(new JLabel("Adresse Professeur:", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfIdentifiant);	
-				this.panelModifier.add(new JLabel("Telephone Professeur :", SwingConstants.CENTER));
+				this.panelModifier.add(new JLabel("Identifiant Professeur:", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfIdentifiant1);	
 				this.panelModifier.add(new JLabel("Mdp Professeur :", SwingConstants.CENTER));
 				this.panelModifier.add(this.tfMdp1);
 				this.panelModifier.add(new JLabel());
@@ -454,9 +426,9 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						
 						// instansation de la jtable
 						
-						LinkedList<Prof> uneListe = Modele_Prof.selectall();
+						LinkedList<Prof> uneListe = Modele_Admin.selectall();
 						String titres[] = {"id_prof","Nom","Prenom","Identifiant","Mdp"};
-						Object donnees [][] = new Object[uneListe.size()][11];
+						Object donnees [][] = new Object[uneListe.size()][5];
 						int i = 0;
 						for(Prof unP : uneListe)
 						{
@@ -536,7 +508,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						if(ok)
 						{	
 							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Prof.insertionProf(unProf);
+							Modele_Admin.insertionProf(unProf);
 							JOptionPane.showMessageDialog(null, "Insertion reussi");
 							this.tfIdprof.setText("");
 							this.tfNom.setText("");
@@ -561,7 +533,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 						if(ok)
 						{	
 							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Prof.modificationCandidat(unProf);
+							Modele_Admin.modificationProf(unProf);
 							JOptionPane.showMessageDialog(null, "Modification reussi");
 							this.tfIdprof1.setText("");
 							this.tfNom1.setText("");
@@ -589,7 +561,7 @@ public class Vue_GestionProfesseur extends JFrame implements ActionListener
 					else if(e.getSource() == this.btSupp)
 					{
 						String cle = this.tfCle.getText();
-						int nb = Modele_Prof.delete(cle);
+						int nb = Modele_Admin.delete(cle);
 						this.lbResultat.setText("Les Candidats supprimés sont :" +nb);
 						
 					}

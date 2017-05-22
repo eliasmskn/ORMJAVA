@@ -17,11 +17,20 @@ public class Prof
 	
 	public Prof(int id_prof, String nom, String prenom, String identifiant, String mdp)
 	{
-		id_prof = this.id_prof;
-		nom = this.nom;
-		prenom = this.prenom;
-		identifiant = this.identifiant;
-		mdp = this.mdp;
+		this.id_prof = id_prof;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.identifiant = identifiant;
+		this.mdp = mdp;
+	}
+	
+	public String toString()
+	{
+		return "\n Id Professeur:"+this.id_prof+
+				"\n Nom Professeur :" +this.nom+
+				"\n Prenom Professeur :"+this.prenom+
+				"\n Identifiant Professeur :"+this.identifiant+
+				"\n Mdp Professeur :"+this.mdp;
 	}
 
 	public int getId_prof() {
