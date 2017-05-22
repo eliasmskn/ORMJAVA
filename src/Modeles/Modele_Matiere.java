@@ -133,7 +133,7 @@ public class Modele_Matiere {
 		}
 		catch (SQLException exp)
 		{
-			JOptionPane.showMessageDialog(null, "Erreure :"+ exp);
+			JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
 		}
 		unModele.deconnexion();
 		return nb;		
