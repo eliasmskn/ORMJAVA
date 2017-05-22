@@ -26,11 +26,11 @@ public class Modele_Classe {
 			while(unRes.next())
 			{
 				int id_classe = unRes.getInt("id_classe");
-				int nombreEleve = unRes.getInt("nombreEleve");
+				int nb_eleve = unRes.getInt("nb_eleve");
 				String specialite = unRes.getString("specialite");
 				String niveau = unRes.getString("niveau");
 			
-				Classe unP = new Classe(id_classe, nombreEleve, specialite, niveau);
+				Classe unP = new Classe(id_classe, nb_eleve, specialite, niveau);
 				uneListe.add(unP);
 			}
 			unStat.close();
@@ -57,10 +57,10 @@ public class Modele_Classe {
 			if(unRes.next())
 			{
 				int id_classe = unRes.getInt("id_classe");
-				int nombreEleve = unRes.getInt("nombreEleve");
+				int nb_eleve = unRes.getInt("nb_eleve");
 				String specialite = unRes.getString("specialite");
 				String niveau = unRes.getString("niveau");
-				unP = new Classe(id_classe, nombreEleve, specialite, niveau);
+				unP = new Classe(id_classe, nb_eleve, specialite, niveau);
 			}
 			
 			unStat.close();
