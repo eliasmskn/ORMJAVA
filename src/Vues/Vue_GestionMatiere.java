@@ -25,8 +25,10 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Controleurs.Matiere;
 import Controleurs.Prof;
 import Modeles.Modele_Admin;
+import Modeles.Modele_Matiere;
 import Modeles.Modele_Prof;
 
 
@@ -71,7 +73,7 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 				private JLabel lbtitremodif = new JLabel("Modification d'un matiere");
 				private JTextField tfIdmatiere1 = new JTextField();
 				private JTextField tfLibelle1 = new JTextField();
-				private JButton btMaj = new JButton("Mettre ï¿½ jour");
+				private JButton btMaj = new JButton("Mettre à jour");
 				private JButton btAnnuler1 = new JButton("Annuler");
 				
 				
@@ -338,11 +340,11 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 				{
 					// remplire le comboBox
 					
-					LinkedList<Matiere> uneListe = Modele_Prof.selectall();
+					LinkedList<Matiere> uneListe = Modele_Matiere.selectall();
 					this.cbxMatiere.removeAllItems();
 					for(Matiere uneM : uneListe)
 					{
-						this.cbxMatiere.addItem(uneM.getId_prof()+" - "+uneM.getNom());
+						this.cbxMatiere.addItem(uneM.getId_matiere()+" - "+uneM.getLibelle());
 					}
 				}
 				
@@ -407,14 +409,14 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 						
 						// instansation de la jtable
 						
-						LinkedList<Matiere> uneListe = Modele_Admin.selectall();
+						LinkedList<Matiere> uneListe = Modele_Matiere.selectall();
 						String titres[] = {"id_matiere","libelle"};
-						Object donnees [][] = new Object[uneListe.size()][5];
+						Object donnees [][] = new Object[uneListe.size()][2];
 						int i = 0;
 						for(Matiere uneM : uneListe)
 						{
 							donnees[i][0] = uneM.getId_matiere();
-							donnees[i][1] = uneM.getlibelle();
+							donnees[i][1] = uneM.getLibelle();
 							i++;
 						}
 						this.uneTable = new JTable(donnees,titres);
@@ -463,7 +465,7 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 					else if(e.getSource() == this.btAnnuler1)
 					{
 						this.tfIdmatiere1.setText("");
-						this.tfLibelle.setText("");
+						this.tfLibelle1.setText("");
 					}
 					else if(e.getSource() == this.btEnregistrer)
 					{
@@ -478,7 +480,7 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 						if(ok)
 						{	
 							Matiere uneMatiere = new Matiere(id_matiere, libelle);
-							Modele_Admin.insertionMatiere(uneMatiere);
+							Modele_Matiere.insertionMatiere(uneMatiere);
 							JOptionPane.showMessageDialog(null, "Insertion reussi");
 							this.tfIdmatiere.setText("");
 							this.tfLibelle.setText("");
@@ -489,15 +491,16 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 					{
 						Boolean ok = true;
 						
-						int id_matiere = Integer.parseInt(this.tfIdmatiere.getText());
-						String libelle = this.tfLibelle.getText();
+					
+							int id_matiere = Integer.parseInt(this.tfIdmatiere1.getText());
+							String libelle = this.tfLibelle1.getText();
 						
 						//verifier les autres champs et mettre ok ï¿½ false
 						
 						if(ok)
 						{	
 							Matiere uneMatiere = new Matiere(id_matiere, libelle);
-							Modele_Admin.modificationProf(uneMatiere);
+							Modele_Matiere.modificationMatiere(uneMatiere);
 							JOptionPane.showMessageDialog(null, "Modification reussi");
 							this.tfIdmatiere.setText("");
 							this.tfLibelle.setText("");
@@ -514,7 +517,7 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 						
 						String chaine = this.cbxMatiere.getSelectedItem().toString();
 						String tab[] = chaine.split(" - "); // explode
-						Prof uneM = Modele_Matiere.selectwhere(Integer.parseInt(tab[0]));
+						Matiere uneM = Modele_Matiere.selectwhere(Integer.parseInt(tab[0]));
 						this.txtRecherche.setText(uneM.toString());
 						this.txtRecherche.setEditable(false);
 					}
@@ -522,13 +525,13 @@ public class Vue_GestionMatiere extends JFrame implements ActionListener
 					else if(e.getSource() == this.btSupp)
 					{
 						String cle = this.tfCle.getText();
-						int nb = Modele_Admin.delete(cle);
+						int nb = Modele_Matiere.delete(cle);
 						this.lbResultat.setText("Les matieres supprimÃ©s sont :" +nb);
 						
 					}
 				}
 			
-			}
+			
 
 	}
 

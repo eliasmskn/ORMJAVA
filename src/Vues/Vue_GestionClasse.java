@@ -25,9 +25,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Controleurs.Classe;
 import Controleurs.Prof;
-import Modeles.Modele_Prof;
-import Modeles.Modele_Admin;
+import Modeles.Modele_Classe;
 import Modeles.Modele;
 
 
@@ -61,50 +61,46 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 			private JButton btQuitter = new JButton(new ImageIcon("exit.png"));
 			
 			// constructiuon des objet du Ajouter
-			private JLabel lbtitreajout = new JLabel("Ajout d'un professeur");
-			private JTextField tfIdprof = new JTextField();
-			private JTextField tfNom = new JTextField();
-			private JTextField tfPrenom = new JTextField();
-			private JTextField tfIdentifiant= new JTextField();
-			private JTextField tfMdp = new JTextField();
+			private JLabel lbtitreajout = new JLabel("Ajout d'une classe");
+			private JTextField tfIdclasse = new JTextField();
+			private JTextField tfNb_eleve = new JTextField();
+			private JTextField tfniveau = new JTextField();
 			private JButton btEnregistrer = new JButton("Enregistrer");
 			private JButton btAnnuler = new JButton("Annuler");
 			
 			
 			// constructiuon des objet du panel modifier
-				private JLabel lbtitremodif = new JLabel("Modification d'un professeur");
-				private JTextField tfIdprof1 = new JTextField();
-				private JTextField tfNom1 = new JTextField();
-				private JTextField tfPrenom1 = new JTextField();
-				private JTextField tfIdentifiant1 = new JTextField();
-				private JTextField tfMdp1 = new JTextField();
-				private JButton btMaj = new JButton("Mettre ï¿½ jour");
+				private JLabel lbtitremodif = new JLabel("Modification d'une classe");
+				private JTextField tfIdclasse1 = new JTextField();
+				private JTextField tfNb_eleve1 = new JTextField();
+				private JTextField tfniveau1 = new JTextField();
+				private JButton btMaj = new JButton("Mettre à jour");
 				private JButton btAnnuler1 = new JButton("Annuler");
 				
 				
 			// panel lister
-			private JLabel lbtitrelister = new JLabel("Liste des professeurs");
+			private JLabel lbtitrelister = new JLabel("Liste des classes");
 			private JButton btFermer = new JButton("Fermer");
 			private JTable uneTable = null;
 			
 			
 			// panel rechercher
 			
-			private JLabel lbtitrearech = new JLabel("Recherche de professeur");
+			private JLabel lbtitrearech = new JLabel("Recherche de classe");
 			private JButton btOk = new JButton("OK");
 			private JComboBox cbxProf = new JComboBox<>();
 			private JTextArea txtRecherche = new JTextArea();
 				
 			// panel supprimer
 			
-			private JLabel lbtitreasupp = new JLabel("Suppression d'un professeur");
+			private JLabel lbtitreasupp = new JLabel("Suppression d'une classe");
 			private JButton btSupp = new JButton("Supprimer");
 			private JTextField tfCle = new JTextField();
 			private JLabel lbResultat = new JLabel("Resultat :");
 			
-			 public Vue_GestionProfesseur() 
+			 public Vue_GestionClasse() 
 			{
-				this.setTitle("Gestion des professeurs ");
+				this.setTitle("Gestion des classes ");
 				this.setResizable(false);
 				this.setSize(1900, 1000);
 				this.setBackground(Color.white);
@@ -200,17 +196,13 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 				
 				this.panelAjouter.setBounds(470, 300, 1200, 600);
 				this.panelAjouter.setBorder(BorderFactory.createLineBorder(Color.black));
-				this.panelAjouter.setLayout(new GridLayout(15, 2));
+				this.panelAjouter.setLayout(new GridLayout(11, 2));
 				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel());
-				this.panelAjouter.add(new JLabel("Nom Professeur :", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfNom);	
-				this.panelAjouter.add(new JLabel("Prenom Professeur :", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfPrenom);
-				this.panelAjouter.add(new JLabel("Identifiant Professeur:", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfIdentifiant);	
-				this.panelAjouter.add(new JLabel("Mdp Professeur :", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfMdp);
+				this.panelAjouter.add(new JLabel("Nb eleve :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfNb_eleve);	
+				this.panelAjouter.add(new JLabel("Niveau classe :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfniveau);
 				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel());
 				
@@ -240,19 +232,15 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 				
 				this.panelModifier.setBounds(470, 300, 1200, 600);
 				this.panelModifier.setBorder(BorderFactory.createLineBorder(Color.black));
-				this.panelModifier.setLayout(new GridLayout(15, 2));
+				this.panelModifier.setLayout(new GridLayout(11, 2));
 				this.panelModifier.add(new JLabel());
 				this.panelModifier.add(new JLabel());
-				this.panelModifier.add(new JLabel("Id Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfIdprof1);
-				this.panelModifier.add(new JLabel("Nom Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfNom1);	
-				this.panelModifier.add(new JLabel("Prenom Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfPrenom1);
-				this.panelModifier.add(new JLabel("Identifiant Professeur:", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfIdentifiant1);	
-				this.panelModifier.add(new JLabel("Mdp Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfMdp1);
+				this.panelModifier.add(new JLabel("Id Classe :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfIdclasse1);
+				this.panelModifier.add(new JLabel("Nb Eleves :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfNb_eleve1);	
+				this.panelModifier.add(new JLabel("Niveau classe :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfniveau1);
 				this.panelModifier.add(new JLabel());
 				this.panelModifier.add(new JLabel());
 					
@@ -357,11 +345,11 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 				{
 					// remplire le comboBox
 					
-					LinkedList<Prof> uneListe = Modele_Prof.selectall();
+					LinkedList<Classe> uneListe = Modele_Classe.selectall();
 					this.cbxProf.removeAllItems();
-					for(Prof unP : uneListe)
+					for(Classe uneC : uneListe)
 					{
-						this.cbxProf.addItem(unP.getId_prof()+" - "+unP.getNom());
+						this.cbxProf.addItem(uneC.getId_classe()+" - "+uneC.getNb_eleve());
 					}
 				}
 				
@@ -426,17 +414,15 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 						
 						// instansation de la jtable
 						
-						LinkedList<Prof> uneListe = Modele_Admin.selectall();
-						String titres[] = {"id_prof","Nom","Prenom","Identifiant","Mdp"};
-						Object donnees [][] = new Object[uneListe.size()][5];
+						LinkedList<Classe> uneListe = Modele_Classe.selectall();
+						String titres[] = {"id_classe","Nb_eleve","Niveau"};
+						Object donnees [][] = new Object[uneListe.size()][3];
 						int i = 0;
-						for(Prof unP : uneListe)
+						for(Classe uneC : uneListe)
 						{
-							donnees[i][0] = unP.getId_prof();
-							donnees[i][1] = unP.getNom();
-							donnees[i][2] = unP.getPrenom();
-							donnees[i][3] = unP.getIdentifiant();
-							donnees[i][4] = unP.getMdp();
+							donnees[i][0] = uneC.getId_classe();
+							donnees[i][1] = uneC.getNb_eleve();
+							donnees[i][2] = uneC.getNiveau();
 							i++;
 						}
 						this.uneTable = new JTable(donnees,titres);
@@ -479,42 +465,34 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 					
 					else if(e.getSource() == this.btAnnuler)
 					{
-						this.tfIdprof.setText("");
-						this.tfNom.setText("");
-						this.tfPrenom.setText("");
-						this.tfIdentifiant.setText("");
-						this.tfMdp.setText("");
+						this.tfIdclasse.setText("");
+						this.tfNb_eleve.setText("");
+						this.tfniveau.setText("");
 					}
 					else if(e.getSource() == this.btAnnuler1)
 					{
-						this.tfIdprof1.setText("");
-						this.tfNom1.setText("");
-						this.tfPrenom1.setText("");
-						this.tfIdentifiant1.setText("");
-						this.tfMdp.setText("");
+						this.tfIdclasse1.setText("");
+						this.tfNb_eleve1.setText("");
+						this.tfniveau1.setText("");
 					}
 					else if(e.getSource() == this.btEnregistrer)
 					{
 						Boolean ok = true;
 						
-						int id_prof = 0;
-						String nom = this.tfNom.getText();
-						String prenom = this.tfPrenom.getText();
-						String identifiant = this.tfIdentifiant.getText();
-						String mdp = this.tfMdp.getText();
+						int id_classe = 0;
+						int Nb_eleve = Integer.parseInt(this.tfNb_eleve.getText());
+						String niveau = this.tfniveau.getText();
 						
 						//verifier les autres champs et mettre ok ï¿½ false
 						
 						if(ok)
 						{	
-							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Admin.insertionProf(unProf);
+							Classe uneClasse = new Classe(id_classe, Nb_eleve, niveau);
+							Modele_Classe.insertionClasse(uneClasse);
 							JOptionPane.showMessageDialog(null, "Insertion reussi");
-							this.tfIdprof.setText("");
-							this.tfNom.setText("");
-							this.tfPrenom.setText("");
-							this.tfIdentifiant.setText("");
-							this.tfMdp.setText("");
+							this.tfIdclasse.setText("");
+							this.tfNb_eleve.setText("");
+							this.tfniveau.setText("");
 							this.panelAjouter.setVisible(false);
 						}
 					}
@@ -522,24 +500,20 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 					{
 						Boolean ok = true;
 						
-						int id_prof = Integer.parseInt(this.tfIdprof1.getText());
-						String nom = this.tfNom1.getText();
-						String prenom = this.tfPrenom1.getText();
-						String identifiant = this.tfIdentifiant1.getText();
-						String mdp = this.tfMdp1.getText();
+						int id_classe = Integer.parseInt(this.tfIdclasse1.getText());
+						int Nb_eleve = Integer.parseInt(this.tfNb_eleve1.getText());
+						String niveau = this.tfniveau1.getText();
 						
 						//verifier les autres champs et mettre ok ï¿½ false
 						
 						if(ok)
 						{	
-							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Admin.modificationProf(unProf);
+							Classe uneClasse = new Classe(id_classe, Nb_eleve, niveau);
+							Modele_Classe.modificationClasse(uneClasse);
 							JOptionPane.showMessageDialog(null, "Modification reussi");
-							this.tfIdprof1.setText("");
-							this.tfNom1.setText("");
-							this.tfPrenom1.setText("");
-							this.tfIdentifiant1.setText("");
-							this.tfMdp1.setText("");
+							this.tfIdclasse1.setText("");
+							this.tfNb_eleve1.setText("");
+							this.tfniveau1.setText("");
 							this.panelAjouter.setVisible(false);
 						}
 					}
@@ -553,16 +527,16 @@ public class Vue_GestionClasse extends JFrame implements ActionListener
 						
 						String chaine = this.cbxProf.getSelectedItem().toString();
 						String tab[] = chaine.split(" - "); // explode
-						Prof unP = Modele_Prof.selectwhere(Integer.parseInt(tab[0]));
-						this.txtRecherche.setText(unP.toString());
+						Classe uneC = Modele_Classe.selectwhere(Integer.parseInt(tab[0]));
+						this.txtRecherche.setText(uneC.toString());
 						this.txtRecherche.setEditable(false);
 					}
 				
 					else if(e.getSource() == this.btSupp)
 					{
 						String cle = this.tfCle.getText();
-						int nb = Modele_Admin.delete(cle);
-						this.lbResultat.setText("Les Candidats supprimï¿½s sont :" +nb);
+						int nb = Modele_Classe.delete(cle);
+						this.lbResultat.setText("Les classes supprimés sont :" +nb);
 						
 					}
 				}

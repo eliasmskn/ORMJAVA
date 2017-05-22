@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import com.mysql.jdbc.Statement;
 
+import Controleurs.Matiere;
 import Controleurs.Prof;
 
 public class Modele_Matiere {
@@ -17,7 +18,7 @@ public class Modele_Matiere {
 	{
 		String requete ="Insert into matiere ("
 				+ "libelle) values ("
-				+ "'"+uneM.getlibelle()+"');";
+				+ "'"+uneM.getLibelle()+"');";
 			
 		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
@@ -37,8 +38,8 @@ public class Modele_Matiere {
 	public static void modificationMatiere(Matiere uneM)
 	{
 		String requete ="Update matiere"
-				+ " set libelle = '" + uneM.getlibelle() + "'
-				+ " where id_matiere = '" + uneM.getId_matieref() + "' ;";
+				+ " set libelle = '" + uneM.getLibelle() + "'"
+				+ " where id_matiere = '" + uneM.getId_matiere() + "' ;";
 			
 		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
@@ -58,9 +59,9 @@ public class Modele_Matiere {
 	public static LinkedList<Matiere> selectall()
 	{
 		String requete ="Select * from matiere;";
-		LinkedList<Prof> uneListe = new LinkedList<Prof>();
+		LinkedList<Matiere> uneListe = new LinkedList<Matiere>();
 		
-		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "root");
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
 		try{
 			Statement unStat =  (Statement) unModele.getMaConnexion().createStatement();
@@ -71,7 +72,7 @@ public class Modele_Matiere {
 			{
 				int id_matiere = unRes.getInt("id_matiere");
 				String libelle = unRes.getString("libelle");
-				Prof uneM = new Matiere(id_matiere, libelle);
+				Matiere uneM = new Matiere(id_matiere, libelle);
 				uneListe.add(uneM);
 			}
 			unStat.close();
@@ -88,7 +89,7 @@ public class Modele_Matiere {
 	{
 		String requete ="Select * from matiere where id_matiere = '"+id_matiere+"';";
 		Matiere uneM = null;
-		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "root");
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
 		try{
 			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
