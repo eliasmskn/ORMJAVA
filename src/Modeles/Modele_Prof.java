@@ -48,6 +48,34 @@ public class Modele_Prof
 			
 			
 			
+			public static int sendIdProf(String identifiant, String mdp)
+			{
+				int resultat = 0;
+				String requete = "Select id_prof"
+						+ " from professeur where identifiant ='"+identifiant
+						+"' and mdp ='"+mdp+"';";
+				Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+				unModele.changerPilot();
+				unModele.connexion();
+				try
+				{
+					Statement unStat = (Statement) unModele.getMaConnexion().createStatement();
+					ResultSet unRes = unStat.executeQuery(requete);
+					unRes.next();
+					int id_prof = unRes.getInt("id_prof");
+					
+					resultat = id_prof;
+				}
+				catch(SQLException exp)
+				{
+					System.out.println("Erreur de la requette : " + requete +" | Message :"+ exp);
+				}
+				unModele.connexion();
+				return resultat;
+			}
+			
+			
+			
 			public static LinkedList<Prof> selectall()
 			{
 				String requete ="Select * from professeur;";

@@ -22,21 +22,35 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import Controleurs.Affectation;
+import Controleurs.Matiere;
+import Modeles.Modele_Affectation;
+import Modeles.Modele_Matiere;
+
 public class Vue_Prof extends JFrame implements ActionListener 
 {
 	private JPanel panelMenu = new JPanel();
 	private JPanel panelTitre = new JPanel();
+	private JPanel panelRechercher = new JPanel();
 	private JPanel panelCentral = new JPanel();
 	private JPanel paneltitreaccueil = new JPanel();
+	private JPanel paneltitrearech = new JPanel();
+	
 	
 	private JLabel lbtitreaccueil = new JLabel("Espace Professeur");
 	private JLabel lbtitre = new JLabel("Gestion - Planning");
 	private JLabel lbmenu = new JLabel("Menu Principal", SwingConstants.CENTER);
 	private JButton btGestionSalle = new JButton("Gestion Salles");
+	private JButton btRechercher = new JButton(new ImageIcon("loupe.png"));
 	private JButton btQuitter = new JButton(new ImageIcon("exit.png"));
 	private JLabel uneImage = new JLabel(new ImageIcon("A.png"));
 	
+	// panel rechercher
 	
+	private JLabel lbtitrearech = new JLabel("Recherche de matiere");
+	private JButton btOk = new JButton("OK");
+	private JComboBox cbxMatiere = new JComboBox<>();
+	private JTextArea txtRecherche = new JTextArea();
 	
     public Vue_Prof() 
 	{
@@ -104,12 +118,55 @@ public class Vue_Prof extends JFrame implements ActionListener
 		this.add(this.panelMenu);
 		
 		
+		
+		
+		
+		// construction du panel titre rechercher
+		
+		Font TR = new Font("Serif", Font.PLAIN, 30);
+		this.paneltitrearech.setBounds(900, 180, 350, 50);
+		this.paneltitrearech.setBackground(Color.lightGray);
+		this.paneltitrearech.setLayout(new FlowLayout());
+		this.lbtitrearech.setFont(TR);
+		this.paneltitrearech.add(this.lbtitrearech, SwingConstants.CENTER);
+		this.add(this.paneltitrearech);
+		this.paneltitrearech.setVisible(false);
+		
+			
+		// construction panel rechercher
+		
+		this.panelRechercher.setBounds(570, 300, 1000, 500);
+		this.panelRechercher.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.panelRechercher.setLayout(null);
+		this.cbxMatiere.setBounds(375, 50, 200, 20);
+		this.panelRechercher.add(this.cbxMatiere);
+		this.btOk.setBounds(580, 50, 100, 20);
+		this.btOk.setBackground(Color.white);
+		this.panelRechercher.add(this.btOk);
+		this.txtRecherche.setBounds(375, 100, 310, 300);
+		this.panelRechercher.add(this.txtRecherche, SwingConstants.CENTER);
+		
+		this.panelRechercher.setVisible(false);
+		this.add(this.panelRechercher);
+		
+		
 		// rendre les bouton ecoutable
 		
 		this.btGestionSalle.addActionListener(this);
 		this.btQuitter.addActionListener(this);
 	}
 	
+    private void remplirCBX() 
+	{
+		// remplire le comboBox
+		
+		LinkedList<Affectation> uneListe = Modele_Affectation.selectall();
+		this.cbxMatiere.removeAllItems();
+		for(Affectation uneM : uneListe)
+		{
+			this.cbxMatiere.addItem(uneM.getDate()+" - "+uneM.getId_classe());
+		}
+	}
 
 
 	@Override
@@ -126,6 +183,22 @@ public class Vue_Prof extends JFrame implements ActionListener
 		{
 			new Vue_GestionSalle();
 			this.dispose();
+		}
+		else if(e.getSource() == this.btRechercher)
+		{
+			this.remplirCBX();
+			this.panelRechercher.setVisible(true);
+			this.paneltitrearech.setVisible(true);
+			
+		}
+		else if(e.getSource() == this.btOk)
+		{
+			
+			String chaine = this.cbxMatiere.getSelectedItem().toString();
+			String tab[] = chaine.split(" - "); // explode
+			Matiere uneM = Modele_Matiere.selectwhere(Integer.parseInt(tab[0]));
+			this.txtRecherche.setText(uneM.toString());
+			this.txtRecherche.setEditable(false);
 		}
 	}
 	

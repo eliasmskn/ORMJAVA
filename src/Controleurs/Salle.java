@@ -18,6 +18,13 @@ public class Salle {
 		this.num_salle = num_salle;
 		this.capacite = capacite;
 	}
+	
+	public String toString()
+	{
+		return "\n Id Salle:"+this.id_salle+
+				"\n Num Salle :" +this.num_salle+
+				"\n Capacite :"+this.capacite;
+	}
 
 	public int getId_salle() {
 		return id_salle;

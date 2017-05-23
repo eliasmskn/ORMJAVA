@@ -35,7 +35,7 @@ public class Vue_Admin extends JFrame implements ActionListener
 	private JLabel lbtitre = new JLabel("Gestion - Planning");
 	private JLabel lbmenu = new JLabel("Menu Principal", SwingConstants.CENTER);
 	private JButton btGestionSalle = new JButton("Gestion Salles");
-	private JButton btGestionCour = new JButton("Gestion Cours");
+	private JButton btGestionAffectation = new JButton("Gestion Affectations");
 	private JButton btGestionMatiere = new JButton("Gestion Matieres");
 	private JButton btGestionClasse = new JButton("Gestion Classes");
 	private JButton btGestionProfesseur = new JButton("Gestion Professeurs");
@@ -103,8 +103,8 @@ public class Vue_Admin extends JFrame implements ActionListener
 		this.panelMenu.add(this.lbmenu);
 		this.btGestionSalle.setBackground(Color.white);
 		this.panelMenu.add(this.btGestionSalle);
-		this.btGestionCour.setBackground(Color.white);
-		this.panelMenu.add(this.btGestionCour);
+		this.btGestionAffectation.setBackground(Color.white);
+		this.panelMenu.add(this.btGestionAffectation);
 		this.btGestionMatiere.setBackground(Color.white);
 		this.panelMenu.add(this.btGestionMatiere);
 		this.btGestionClasse.setBackground(Color.white);
@@ -121,7 +121,7 @@ public class Vue_Admin extends JFrame implements ActionListener
 		// rendre les bouton ecoutable
 		
 		this.btGestionSalle.addActionListener(this);
-		this.btGestionCour.addActionListener(this);
+		this.btGestionAffectation.addActionListener(this);
 		this.btGestionMatiere.addActionListener(this);
 		this.btGestionClasse.addActionListener(this);
 		this.btGestionProfesseur.addActionListener(this);
@@ -145,9 +145,9 @@ public class Vue_Admin extends JFrame implements ActionListener
 			new Vue_GestionSalle();
 			this.dispose();
 		}
-		else if(e.getSource() == this.btGestionCour)
+		else if(e.getSource() == this.btGestionAffectation)
 		{
-			new Vue_GestionCour();
+			new Vue_GestionAffectation();
 			this.dispose();
 		}
 		else if(e.getSource() == this.btGestionMatiere)

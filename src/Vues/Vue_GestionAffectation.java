@@ -26,7 +26,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import Controleurs.Affectation;
+import Controleurs.DatePPE;
+import Controleurs.HeurePPE;
 import Controleurs.Prof;
+import Modeles.Modele_Affectation;
 import Modeles.Modele_Prof;
 import Modeles.Modele_Admin;
 import Modeles.Modele;
@@ -52,7 +55,7 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 			private JPanel paneltitrearech = new JPanel();
 			
 			private JLabel lbTitre = new JLabel("Espace Admin");
-			private JLabel lbMenu = new JLabel("Menu gestion professeur");
+			private JLabel lbMenu = new JLabel("Menu gestion affectation");
 			private JLabel uneImage = new JLabel(new ImageIcon("staff.png"));
 			private JButton btLister = new JButton(new ImageIcon("list.png"));
 			private JButton btModifier = new JButton(new ImageIcon("edit.png"));
@@ -63,23 +66,27 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 			
 			// constructiuon des objet du Ajouter
 			private JLabel lbtitreajout = new JLabel("Ajout d'une Affectation");
+			private JTextField tfIdaffectation = new JTextField();
 			private JTextField tfIdprof = new JTextField();
-			private JTextField tfNom = new JTextField();
-			private JTextField tfPrenom = new JTextField();
-			private JTextField tfIdentifiant= new JTextField();
-			private JTextField tfMdp = new JTextField();
+			private JTextField tfIdmatiere = new JTextField();
+			private JTextField tfIdclasse = new JTextField();
+			private JTextField tfIdsalle= new JTextField();
+			private JTextField tfDate = new JTextField();
+			private JTextField tfDuree = new JTextField();
 			private JButton btEnregistrer = new JButton("Enregistrer");
 			private JButton btAnnuler = new JButton("Annuler");
 			
 			
 			// constructiuon des objet du panel modifier
 				private JLabel lbtitremodif = new JLabel("Modification d'un affectation");
+				private JTextField tfIdaffectation1 = new JTextField();
 				private JTextField tfIdprof1 = new JTextField();
-				private JTextField tfNom1 = new JTextField();
-				private JTextField tfPrenom1 = new JTextField();
-				private JTextField tfIdentifiant1 = new JTextField();
-				private JTextField tfMdp1 = new JTextField();
-				private JButton btMaj = new JButton("Mettre ï¿½ jour");
+				private JTextField tfIdmatiere1 = new JTextField();
+				private JTextField tfIdclasse1 = new JTextField();
+				private JTextField tfIdsalle1 = new JTextField();
+				private JTextField tfDate1 = new JTextField();
+				private JTextField tfDuree1 = new JTextField();
+				private JButton btMaj = new JButton("Mettre à jour");
 				private JButton btAnnuler1 = new JButton("Annuler");
 				
 				
@@ -98,7 +105,7 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 				
 			// panel supprimer
 			
-			private JLabel lbtitreasupp = new JLabel("Suppression d'un affectation");
+			private JLabel lbtitreasupp = new JLabel("Suppression d'une affectation");
 			private JButton btSupp = new JButton("Supprimer");
 			private JTextField tfCle = new JTextField();
 			private JLabel lbResultat = new JLabel("Resultat :");
@@ -204,14 +211,18 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 				this.panelAjouter.setLayout(new GridLayout(15, 2));
 				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel());
-				this.panelAjouter.add(new JLabel("Nom Professeur :", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfNom);	
-				this.panelAjouter.add(new JLabel("Prenom Professeur :", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfPrenom);
-				this.panelAjouter.add(new JLabel("Identifiant Professeur:", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfIdentifiant);	
-				this.panelAjouter.add(new JLabel("Mdp Professeur :", SwingConstants.CENTER));
-				this.panelAjouter.add(this.tfMdp);
+				this.panelAjouter.add(new JLabel("Id Professeur :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfIdprof);	
+				this.panelAjouter.add(new JLabel("Id Matiere :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfIdmatiere);
+				this.panelAjouter.add(new JLabel("Id Classe:", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfIdclasse);	
+				this.panelAjouter.add(new JLabel("Id Salle :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfIdsalle);
+				this.panelAjouter.add(new JLabel("Date :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfDate);
+				this.panelAjouter.add(new JLabel("Durée :", SwingConstants.CENTER));
+				this.panelAjouter.add(this.tfDuree);
 				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel());
 				
@@ -244,16 +255,20 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 				this.panelModifier.setLayout(new GridLayout(15, 2));
 				this.panelModifier.add(new JLabel());
 				this.panelModifier.add(new JLabel());
+				this.panelModifier.add(new JLabel("Id Affectation :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfIdaffectation1);
 				this.panelModifier.add(new JLabel("Id Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfIdprof1);
-				this.panelModifier.add(new JLabel("Nom Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfNom1);	
-				this.panelModifier.add(new JLabel("Prenom Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfPrenom1);
-				this.panelModifier.add(new JLabel("Identifiant Professeur:", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfIdentifiant1);	
-				this.panelModifier.add(new JLabel("Mdp Professeur :", SwingConstants.CENTER));
-				this.panelModifier.add(this.tfMdp1);
+				this.panelModifier.add(this.tfIdprof1);	
+				this.panelModifier.add(new JLabel("Id Matiere :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfIdmatiere1);
+				this.panelModifier.add(new JLabel("Id Classe:", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfIdclasse1);	
+				this.panelModifier.add(new JLabel("Id Salle :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfIdsalle1);
+				this.panelModifier.add(new JLabel("Date :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfDate1);
+				this.panelModifier.add(new JLabel("Duree :", SwingConstants.CENTER));
+				this.panelModifier.add(this.tfDuree1);
 				this.panelModifier.add(new JLabel());
 				this.panelModifier.add(new JLabel());
 					
@@ -358,11 +373,11 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 				{
 					// remplire le comboBox
 					
-					LinkedList<Prof> uneListe = Modele_Prof.selectall();
+					LinkedList<Affectation> uneListe = Modele_Affectation.selectall();
 					this.cbxProf.removeAllItems();
-					for(Prof unP : uneListe)
+					for(Affectation uneA : uneListe)
 					{
-						this.cbxProf.addItem(unP.getId_prof()+" - "+unP.getNom());
+						this.cbxProf.addItem(uneA.getId_affectation()+" - "+uneA.getDate());
 					}
 				}
 				
@@ -427,17 +442,19 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 						
 						// instansation de la jtable
 						
-						LinkedList<Affectation> uneListe = Modele.selectall();
-						String titres[] = {"id_affectation","id_prof","id_matiere","id_class","id_heure","id_salle"};
-						Object donnees [][] = new Object[uneListe.size()][6];
+						LinkedList<Affectation> uneListe = Modele_Affectation.selectall();
+						String titres[] = {"id_affectation","id_prof","id_matiere","id_classe","id_salle","date", "duree"};
+						Object donnees [][] = new Object[uneListe.size()][7];
 						int i = 0;
-						for(Prof unP : uneListe)
+						for(Affectation uneA : uneListe)
 						{
-							donnees[i][0] = unP.getId_prof();
-							donnees[i][1] = unP.getNom();
-							donnees[i][2] = unP.getPrenom();
-							donnees[i][3] = unP.getIdentifiant();
-							donnees[i][4] = unP.getMdp();
+							donnees[i][0] = uneA.getId_affectation();
+							donnees[i][1] = uneA.getId_prof();
+							donnees[i][2] = uneA.getId_matiere();
+							donnees[i][3] = uneA.getId_classe();
+							donnees[i][4] = uneA.getId_salle();
+							donnees[i][5] = uneA.getDate();
+							donnees[i][6] = uneA.getDuree();
 							i++;
 						}
 						this.uneTable = new JTable(donnees,titres);
@@ -481,41 +498,48 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 					else if(e.getSource() == this.btAnnuler)
 					{
 						this.tfIdprof.setText("");
-						this.tfNom.setText("");
-						this.tfPrenom.setText("");
-						this.tfIdentifiant.setText("");
-						this.tfMdp.setText("");
+						this.tfIdmatiere.setText("");
+						this.tfIdclasse.setText("");
+						this.tfIdsalle.setText("");
+						this.tfDate.setText("");
+						this.tfDuree.setText("");
 					}
 					else if(e.getSource() == this.btAnnuler1)
 					{
+						this.tfIdaffectation1.setText("");
 						this.tfIdprof1.setText("");
-						this.tfNom1.setText("");
-						this.tfPrenom1.setText("");
-						this.tfIdentifiant1.setText("");
-						this.tfMdp.setText("");
+						this.tfIdmatiere1.setText("");
+						this.tfIdclasse1.setText("");
+						this.tfIdsalle1.setText("");
+						this.tfDate.setText("");
+						this.tfDuree.setText("");
 					}
 					else if(e.getSource() == this.btEnregistrer)
 					{
 						Boolean ok = true;
 						
-						int id_prof = 0;
-						String nom = this.tfNom.getText();
-						String prenom = this.tfPrenom.getText();
-						String identifiant = this.tfIdentifiant.getText();
-						String mdp = this.tfMdp.getText();
+						int id_affectation = 0;
+						int id_prof = Integer.parseInt(this.tfIdprof.getText());
+						int id_matiere = Integer.parseInt(this.tfIdmatiere.getText());
+						int id_classe = Integer.parseInt(this.tfIdclasse.getText());
+						int id_salle = Integer.parseInt(this.tfIdsalle.getText());
+						DatePPE date = new DatePPE(this.tfDate.getText(), "yyyy-MM-dd HH:mm:ss");
+						HeurePPE duree = new HeurePPE(this.tfDuree.getText(), "HH:mm:ss");
 						
 						//verifier les autres champs et mettre ok ï¿½ false
 						
 						if(ok)
 						{	
-							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Admin.insertionProf(unProf);
+							Affectation uneA = new Affectation(id_affectation, id_prof, id_matiere, id_classe, id_salle, date, duree);
+							Modele_Affectation.insertionAffectation(uneA);
 							JOptionPane.showMessageDialog(null, "Insertion reussi");
+							this.tfIdaffectation.setText("");
 							this.tfIdprof.setText("");
-							this.tfNom.setText("");
-							this.tfPrenom.setText("");
-							this.tfIdentifiant.setText("");
-							this.tfMdp.setText("");
+							this.tfIdmatiere.setText("");
+							this.tfIdclasse.setText("");
+							this.tfIdsalle.setText("");
+							this.tfDate.setText("");
+							this.tfDuree.setText("");
 							this.panelAjouter.setVisible(false);
 						}
 					}
@@ -523,24 +547,28 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 					{
 						Boolean ok = true;
 						
+						int id_affectation = Integer.parseInt(this.tfIdaffectation1.getText());
 						int id_prof = Integer.parseInt(this.tfIdprof1.getText());
-						String nom = this.tfNom1.getText();
-						String prenom = this.tfPrenom1.getText();
-						String identifiant = this.tfIdentifiant1.getText();
-						String mdp = this.tfMdp1.getText();
+						int id_matiere = Integer.parseInt(this.tfIdmatiere1.getText());
+						int id_classe = Integer.parseInt(this.tfIdclasse1.getText());
+						int id_salle = Integer.parseInt(this.tfIdsalle1.getText());
+						DatePPE date = new DatePPE(this.tfDate1.getText(), "yyyy-MM-dd HH:mm:ss");
+						HeurePPE duree = new HeurePPE(this.tfDuree1.getText(), "HH:mm:ss");
 						
 						//verifier les autres champs et mettre ok ï¿½ false
 						
 						if(ok)
 						{	
-							Prof unProf = new Prof(id_prof, nom, prenom, identifiant, mdp);
-							Modele_Admin.modificationProf(unProf);
+							Affectation uneA = new Affectation(id_affectation, id_prof, id_matiere, id_classe, id_salle, date, duree);
+							Modele_Affectation.modificationAffectation(uneA);
 							JOptionPane.showMessageDialog(null, "Modification reussi");
+							this.tfIdaffectation1.setText("");
 							this.tfIdprof1.setText("");
-							this.tfNom1.setText("");
-							this.tfPrenom1.setText("");
-							this.tfIdentifiant1.setText("");
-							this.tfMdp1.setText("");
+							this.tfIdmatiere1.setText("");
+							this.tfIdclasse1.setText("");
+							this.tfIdsalle1.setText("");
+							this.tfDate1.setText("");
+							this.tfDuree1.setText("");
 							this.panelAjouter.setVisible(false);
 						}
 					}
@@ -554,16 +582,16 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 						
 						String chaine = this.cbxProf.getSelectedItem().toString();
 						String tab[] = chaine.split(" - "); // explode
-						Prof unP = Modele_Prof.selectwhere(Integer.parseInt(tab[0]));
-						this.txtRecherche.setText(unP.toString());
+						Affectation uneA = Modele_Affectation.selectwhere(Integer.parseInt(tab[0]));
+						this.txtRecherche.setText(uneA.toString());
 						this.txtRecherche.setEditable(false);
 					}
 				
 					else if(e.getSource() == this.btSupp)
 					{
 						String cle = this.tfCle.getText();
-						int nb = Modele_Admin.delete(cle);
-						this.lbResultat.setText("Les Candidats supprimï¿½s sont :" +nb);
+						int nb = Modele_Affectation.delete(cle);
+						this.lbResultat.setText("Les Candidats supprimés sont :" +nb);
 						
 					}
 				}
