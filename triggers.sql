@@ -98,4 +98,32 @@ begin
 end;
 /
 
+************************************Trigger de suppression  on cascade si programmé dans le planning*************************************************
+
+
+CREATE TRIGGER Suppr_prof
+BEFORE DELETE ON professeur
+FOR EACH ROW
+DELETE FROM affectation
+WHERE affectation.id_prof = Old.id_prof;
+
+CREATE TRIGGER Suppr_classe
+BEFORE DELETE ON classe
+FOR EACH ROW
+DELETE FROM affectation
+WHERE affectation.id_classe = Old.id_classe;
+
+CREATE TRIGGER Suppr_matiere
+BEFORE DELETE ON matiere
+FOR EACH ROW
+DELETE FROM affectation
+WHERE affectation.matiere = Old.matiere;
+
+CREATE TRIGGER Suppr_salle
+BEFORE DELETE ON salle
+FOR EACH ROW
+DELETE FROM affectation
+WHERE affectation.id_salle = Old.id_salle;
+
+
 ********************************************************************************************************************************************
