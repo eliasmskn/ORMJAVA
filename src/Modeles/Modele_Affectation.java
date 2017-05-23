@@ -177,7 +177,7 @@ public class Modele_Affectation {
 	public static LinkedList<Planning> selectwhereprofAffectation(int id_prof)	
 	{
 		LinkedList<Planning> uneListe = new LinkedList<Planning>();
-		String requete ="Select * from planning where id_prof = '"+id_prof+"';";
+		String requete ="Select * from planning where id_prof = '"+id_prof+"'and date >curdate();";
 	
 		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
