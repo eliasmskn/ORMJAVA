@@ -26,7 +26,7 @@ public class Modele_Affectation {
 				+ "', '"+uneA.getId_matiere()+"','"+uneA.getId_classe()
 				+ "', '"+uneA.getId_salle()+"','"+uneA.getDate()
 				+ "', '"+uneA.getDuree()+"');";
-			
+			System.out.println(requete);
 		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
 		unModele.connexion();
 		try{
@@ -202,5 +202,128 @@ public class Modele_Affectation {
 		unModele.deconnexion();
 		return nb;		
 	}
+	
+	
+	
+	//**********************************controle*********************************
+	
+	public static int controleProf(int id_prof, DatePPE date)	
+	{
+		int Nb = 0;
+		
+		String requete ="Select count(professeur.id_prof)as nb"
+					 + " from professeur, affectation"
+					 + " where professeur.id_prof = affectation.id_prof"
+					 + " and date = '"+date+"'"
+					 + " and professeur.id_prof = '"+id_prof+"';";
+
+		System.out.println(requete);
+		
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+		unModele.connexion();
+		try{
+			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+			
+			ResultSet unRes = unStat.executeQuery(requete);
+			
+				if(unRes.next())
+				{
+					Nb = unRes.getInt("nb");
+					
+				}
+			
+			unStat.close();
+		   }
+		catch (SQLException exp)
+		{
+			JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+		}
+		unModele.deconnexion();
+
+		return Nb;		
+	}
+	
+	
+	
+	
+	
+	public static int controleClasse(int id_classe, DatePPE date)	
+	{
+		int Nb = 0;
+		
+		String requete ="Select count(classe.id_classe)as nb"
+					 + " from classe, affectation"
+					 + " where classe.id_classe = affectation.id_classe"
+					 + " and date = '"+date+"'"
+					 + " and classe.id_classe = '"+id_classe+"';";
+
+		System.out.println(requete);
+		
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+		unModele.connexion();
+		try{
+			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+			
+			ResultSet unRes = unStat.executeQuery(requete);
+			
+				if(unRes.next())
+				{
+					Nb = unRes.getInt("nb");
+					
+				}
+			
+			unStat.close();
+		   }
+		catch (SQLException exp)
+		{
+			JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+		}
+		unModele.deconnexion();
+
+		return Nb;		
+	}
+	
+	
+	
+	
+	
+	
+	
+	public static int controleSalle(int id_salle, DatePPE date)	
+	{
+		int Nb = 0;
+		
+		String requete ="Select count(salle.id_salle)as nb"
+					 + " from salle, affectation"
+					 + " where salle.id_salle = affectation.id_salle"
+					 + " and date = '"+date+"'"
+					 + " and salle.id_salle = '"+id_salle+"';";
+
+		System.out.println(requete);
+		
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+		unModele.connexion();
+		try{
+			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+			
+			ResultSet unRes = unStat.executeQuery(requete);
+			
+				if(unRes.next())
+				{
+					Nb = unRes.getInt("nb");
+					
+				}
+			
+			unStat.close();
+		   }
+		catch (SQLException exp)
+		{
+			JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+		}
+		unModele.deconnexion();
+
+		return Nb;		
+	}
+	
 
 }

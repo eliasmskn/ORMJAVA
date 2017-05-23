@@ -25,6 +25,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.mysql.jdbc.SQLError;
+
 import Controleurs.Affectation;
 import Controleurs.DatePPE;
 import Controleurs.HeurePPE;
@@ -526,21 +528,53 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 						DatePPE date = new DatePPE(this.tfDate.getText(), "yyyy-MM-dd HH:mm:ss");
 						HeurePPE duree = new HeurePPE(this.tfDuree.getText(), "HH:mm:ss");
 						
-						//verifier les autres champs et mettre ok � false
+						int nb = 0;
+						int nb1 = 0;
+						int nb2 = 0;
 						
 						if(ok)
 						{	
-							Affectation uneA = new Affectation(id_affectation, id_prof, id_matiere, id_classe, id_salle, date, duree);
-							Modele_Affectation.insertionAffectation(uneA);
-							JOptionPane.showMessageDialog(null, "Insertion reussi");
-							this.tfIdaffectation.setText("");
-							this.tfIdprof.setText("");
-							this.tfIdmatiere.setText("");
-							this.tfIdclasse.setText("");
-							this.tfIdsalle.setText("");
-							this.tfDate.setText("");
-							this.tfDuree.setText("");
-							this.panelAjouter.setVisible(false);
+							
+							nb = Modele_Affectation.controleProf(id_prof, date);
+							System.out.println(nb);
+							if(nb == 0)
+							{
+								nb1 = Modele_Affectation.controleClasse(id_classe, date);
+								
+								if(nb1 == 0)
+								{
+									nb2 = Modele_Affectation.controleSalle(id_salle, date);
+									
+									if(nb2 == 0)
+									{
+							
+										Affectation uneA = new Affectation(id_affectation, id_prof, id_matiere, id_classe, id_salle, date, duree);
+										Modele_Affectation.insertionAffectation(uneA);
+										JOptionPane.showMessageDialog(null, "Insertion reussi");
+										this.tfIdaffectation.setText("");
+										this.tfIdprof.setText("");
+										this.tfIdmatiere.setText("");
+										this.tfIdclasse.setText("");
+										this.tfIdsalle.setText("");
+										this.tfDate.setText("");
+										this.tfDuree.setText("");
+										this.panelAjouter.setVisible(false);
+									}
+									else
+									{
+										System.out.println("nb est different de 0 (salle) !!!");
+									}
+								}
+								else
+								{
+									System.out.println("nb est different de 0 (Classe) !!!");
+								}
+							}	
+							else
+							{
+								System.out.println("nb est different de 0 (Prof) !!!");
+							}
+							
 						}
 					}
 					else if(e.getSource() == this.btMaj)
