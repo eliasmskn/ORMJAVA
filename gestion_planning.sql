@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS `affectation` (
 
 INSERT INTO `affectation` (`id_affectation`, `id_prof`, `id_matiere`, `id_classe`, `id_salle`, `date`, `duree`) VALUES
 (4, 1, 1, 2, 2, '2017-05-25 10:20:00', '01:00:00'),
-(5, 1, 1, 2, 2, '2017-05-24 00:00:00', '02:30:00');
+(6, 1, 1, 3, 2, '2017-05-25 14:20:00', '02:00:00'),
+(5, 1, 1, 4, 2, '2017-05-24 00:00:00', '02:30:00');
 
 CREATE TABLE IF NOT EXISTS `classe` (
   `id_classe` int(3) NOT NULL AUTO_INCREMENT,
@@ -48,7 +49,10 @@ CREATE TABLE IF NOT EXISTS `classe` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `classe` (`id_classe`, `nb_eleve`, `niveau`) VALUES
-(2, 45, 'ter S 3');
+(1, 17, 'seconde 7'),
+(2, 45, 'ter S 3'),
+(4, 30, '1 ère 1'),
+(3, 25, 'ter ES 4');
 
 CREATE TABLE IF NOT EXISTS `cours` (
   `id_cours` int(3) NOT NULL AUTO_INCREMENT,
@@ -69,7 +73,11 @@ CREATE TABLE IF NOT EXISTS `matiere` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 INSERT INTO `matiere` (`id_matiere`, `libelle`) VALUES
-(1, 'Algo');
+(1, 'Algo'),
+(2, 'Maths'), 
+(3, 'Francais'),
+(4, 'Programmation'),
+(5, 'Administration réseau');
 
 CREATE TABLE IF NOT EXISTS `professeur` (
   `id_prof` int(3) NOT NULL AUTO_INCREMENT,
@@ -82,8 +90,9 @@ CREATE TABLE IF NOT EXISTS `professeur` (
 
 INSERT INTO `professeur` (`id_prof`, `nom`, `prenom`, `identifiant`, `mdp`) VALUES
 (1, 'mskn', 'elias', 'Elias934', 'tchayy'),
+(2, 'Yagoubi', 'Maïssane', 'Maïssouuuuu', 'Kanye'),
 (3, 'chien', 'Chienne', 'chienchein', 'merde'),
-(4, 'ff', '', '', '');
+(4, 'Jouanny', 'Jerome', 'jayjay', '92i');
 
 CREATE TABLE IF NOT EXISTS `salle` (
   `id_salle` int(3) NOT NULL AUTO_INCREMENT,
@@ -93,7 +102,11 @@ CREATE TABLE IF NOT EXISTS `salle` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 INSERT INTO `salle` (`id_salle`, `numero_salle`, `capacite`) VALUES
-(2, '1', 20);
+(1, '1', 23),
+(2, '102', 34),
+(3, '304', 75),
+(4, 'AMPHI 1', 19),
+(5, '209', 20);
 
 
 ALTER TABLE `affectation`
