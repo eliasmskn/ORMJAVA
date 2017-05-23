@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost
--- Généré le :  Mar 23 Mai 2017 à 22:20
+-- Généré le :  Mer 24 Mai 2017 à 00:35
 -- Version du serveur :  5.6.35
 -- Version de PHP :  7.1.1
 
@@ -60,7 +60,20 @@ INSERT INTO `affectation` (`id_affectation`, `id_prof`, `id_matiere`, `id_classe
 (5, 1, 1, 4, 2, '2017-05-24 00:00:00', '02:30:00'),
 (6, 1, 1, 3, 2, '2017-05-25 14:20:00', '02:00:00'),
 (7, 2, 4, 4, 5, '2017-05-17 08:30:00', '04:00:00'),
-(8, 3, 2, 3, 4, '2017-06-01 14:00:00', '04:00:00');
+(8, 3, 2, 3, 4, '2017-06-01 14:00:00', '04:00:00'),
+(9, 2, 2, 4, 3, '2017-05-24 00:07:00', '01:00:00');
+
+--
+-- Déclencheurs `affectation`
+--
+DELIMITER $$
+CREATE TRIGGER `insert_affectation` BEFORE INSERT ON `affectation` FOR EACH ROW BEGIN
+    IF (NEW.date <= NOW()) THEN 
+        SIGNAL SQLSTATE '02000' SET MESSAGE_TEXT = 'Warning: date deja passee !';
+    END IF;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -258,7 +271,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT pour la table `affectation`
 --
 ALTER TABLE `affectation`
-  MODIFY `id_affectation` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_affectation` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT pour la table `classe`
 --
