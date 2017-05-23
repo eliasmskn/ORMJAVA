@@ -76,7 +76,7 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 			Object[] elements = new Object[]{"admin", "prof"};
 			 
 			categorieUser = new JComboBox(elements);
-			this.unPanel.add(new JLabel("Catégorie :", SwingConstants.CENTER));
+			this.unPanel.add(new JLabel("Catï¿½gorie :", SwingConstants.CENTER));
 			this.unPanel.add(categorieUser);
 			this.unPanel.add(new JLabel());
 			this.unPanel.add(new JLabel());
@@ -126,8 +126,8 @@ public class Vue_Connexion extends JFrame implements ActionListener{
 				else if(listeSelect.equals("prof"))
 				{
 
-					JOptionPane.showMessageDialog(this, "Bonjour professeur" + "   " + resultat[1] + "   " +resultat[2]);
-					new Vue_Prof();
+					JOptionPane.showMessageDialog(this, "Bonjour professeur" + "   " + resultat[0] + "   " +resultat[2]);
+					new Vue_Prof(resultat[0]);
 
 					this.dispose();
 				}

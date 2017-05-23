@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -13,6 +14,7 @@ import com.mysql.jdbc.Statement;
 import Controleurs.Affectation;
 import Controleurs.DatePPE;
 import Controleurs.HeurePPE;
+import Controleurs.Planning;
 import Controleurs.Prof;
 
 public class Modele_Affectation {
@@ -172,7 +174,45 @@ public class Modele_Affectation {
 		return uneA;		
 	}
 	
+	public static LinkedList<Planning> selectwhereprofAffectation(int id_prof)	
+	{
+		LinkedList<Planning> uneListe = new LinkedList<Planning>();
+		String requete ="Select * from planning where id_prof = '"+id_prof+"';";
 	
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+		unModele.connexion();
+		
+
+		try{
+			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+			ResultSet unRes = unStat.executeQuery(requete);
+			
+				while(unRes.next())
+				{
+					String nom = unRes.getString("nom");
+					String classe = unRes.getString("classe");
+					String salle = unRes.getString("salle");
+					String matiere = unRes.getString("matiere");
+					DatePPE date = new DatePPE(unRes.getDate("date"), "yyyy-MM-dd");
+					HeurePPE duree = new HeurePPE(unRes.getTime("durée"), "HH:mm:ss");
+					Planning uneAb = new Planning(nom, classe, salle, matiere, date, duree);
+					System.out.println(uneAb);
+					uneListe.add(uneAb);
+					System.out.println(date);
+					System.out.println(duree);
+
+				}
+			
+			unStat.close();
+		   }
+		catch (SQLException exp)
+		{
+			JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+		}
+		unModele.deconnexion();
+		System.out.println(uneListe);
+		return uneListe;		
+	}
 	
 	
 	public static int delete(String cle)	

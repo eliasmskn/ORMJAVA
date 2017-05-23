@@ -24,8 +24,11 @@ import javax.swing.SwingConstants;
 
 import Controleurs.Affectation;
 import Controleurs.Matiere;
+import Controleurs.Planning;
+import Controleurs.Prof;
 import Modeles.Modele_Affectation;
 import Modeles.Modele_Matiere;
+import Modeles.Modele_Prof;
 
 public class Vue_Prof extends JFrame implements ActionListener 
 {
@@ -44,7 +47,8 @@ public class Vue_Prof extends JFrame implements ActionListener
 	private JButton btRechercher = new JButton(new ImageIcon("loupe.png"));
 	private JButton btQuitter = new JButton(new ImageIcon("exit.png"));
 	private JLabel uneImage = new JLabel(new ImageIcon("A.png"));
-	
+
+	private JTable uneTable = null;
 	// panel rechercher
 	
 	private JLabel lbtitrearech = new JLabel("Recherche de matiere");
@@ -52,8 +56,34 @@ public class Vue_Prof extends JFrame implements ActionListener
 	private JComboBox cbxMatiere = new JComboBox<>();
 	private JTextArea txtRecherche = new JTextArea();
 	
-    public Vue_Prof() 
+    public Vue_Prof(String id) 
 	{
+    	
+    	Prof prof =new Prof();
+    	int idProf = Integer.parseInt(id);
+    	prof.setId_prof(idProf);
+    	System.out.println(Modele_Affectation.selectwhereprofAffectation(idProf));
+    	LinkedList<Planning> uneListe = Modele_Affectation.selectwhereprofAffectation(idProf);
+		String titres[] = {"id_prof","Nom","Prenom","Identifiant","Mdp","Mdp"};
+		Object donnees [][] = new Object[uneListe.size()][6];
+		int i = 0;
+		for(Planning unP : uneListe)
+		{
+			donnees[i][0] = unP.getClasse();
+			donnees[i][1] = unP.getDate();
+			donnees[i][2] = unP.getDuree();
+			donnees[i][3] = unP.getMatiere();
+			donnees[i][4] = unP.getNom();
+			donnees[i][5] = unP.getSalle();
+			i++;
+		}
+		this.uneTable = new JTable(donnees,titres);
+		JScrollPane uneScroll = new JScrollPane(this.uneTable);
+		uneScroll.setBounds(0,0,1200,600);
+		uneScroll.setVisible(true);
+		this.paneltitreaccueil.add(uneScroll);
+		
+		
 		this.setTitle("Gestion - Planning");
 		this.setResizable(false);
 		this.setSize(1900, 1000);
