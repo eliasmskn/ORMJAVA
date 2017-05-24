@@ -88,7 +88,7 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 				private JTextField tfIdsalle1 = new JTextField();
 				private JTextField tfDate1 = new JTextField();
 				private JTextField tfDuree1 = new JTextField();
-				private JButton btMaj = new JButton("Mettre à jour");
+				private JButton btMaj = new JButton("Mettre ï¿½ jour");
 				private JButton btAnnuler1 = new JButton("Annuler");
 				
 				
@@ -223,7 +223,7 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 				this.panelAjouter.add(this.tfIdsalle);
 				this.panelAjouter.add(new JLabel("Date :", SwingConstants.CENTER));
 				this.panelAjouter.add(this.tfDate);
-				this.panelAjouter.add(new JLabel("Durée :", SwingConstants.CENTER));
+				this.panelAjouter.add(new JLabel("Durï¿½e :", SwingConstants.CENTER));
 				this.panelAjouter.add(this.tfDuree);
 				this.panelAjouter.add(new JLabel());
 				this.panelAjouter.add(new JLabel());
@@ -531,49 +531,56 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 						int nb = 0;
 						int nb1 = 0;
 						int nb2 = 0;
+						int capacite = 0;
+						int nb_eleve = 0;
 						
 						if(ok)
-						{	
-							
-							nb = Modele_Affectation.controleProf(id_prof, date);
-							System.out.println(nb);
-							if(nb == 0)
-							{
-								nb1 = Modele_Affectation.controleClasse(id_classe, date);
-								
-								if(nb1 == 0)
+						{	capacite = Modele_Affectation.selectcapacite(id_salle);
+							nb_eleve = Modele_Affectation.selectnbeleve(id_classe);
+							if(capacite > nb_eleve){
+								nb = Modele_Affectation.controleProf(id_prof, date);
+								System.out.println(nb);
+								if(nb == 0)
 								{
-									nb2 = Modele_Affectation.controleSalle(id_salle, date);
+									nb1 = Modele_Affectation.controleClasse(id_classe, date);
 									
-									if(nb2 == 0)
+									if(nb1 == 0)
 									{
-							
-										Affectation uneA = new Affectation(id_affectation, id_prof, id_matiere, id_classe, id_salle, date, duree);
-										Modele_Affectation.insertionAffectation(uneA);
-										JOptionPane.showMessageDialog(null, "Insertion reussi");
-										this.tfIdaffectation.setText("");
-										this.tfIdprof.setText("");
-										this.tfIdmatiere.setText("");
-										this.tfIdclasse.setText("");
-										this.tfIdsalle.setText("");
-										this.tfDate.setText("");
-										this.tfDuree.setText("");
-										this.panelAjouter.setVisible(false);
+										nb2 = Modele_Affectation.controleSalle(id_salle, date);
+										
+										if(nb2 == 0)
+										{
+								
+											Affectation uneA = new Affectation(id_affectation, id_prof, id_matiere, id_classe, id_salle, date, duree);
+											Modele_Affectation.insertionAffectation(uneA);
+											JOptionPane.showMessageDialog(null, "Insertion reussi");
+											this.tfIdaffectation.setText("");
+											this.tfIdprof.setText("");
+											this.tfIdmatiere.setText("");
+											this.tfIdclasse.setText("");
+											this.tfIdsalle.setText("");
+											this.tfDate.setText("");
+											this.tfDuree.setText("");
+											this.panelAjouter.setVisible(false);
+										}
+										else
+										{
+											System.out.println("nb est different de 0 (salle) !!!");
+										}
 									}
 									else
 									{
-										System.out.println("nb est different de 0 (salle) !!!");
+										System.out.println("nb est different de 0 (Classe) !!!");
 									}
-								}
+								}	
 								else
 								{
-									System.out.println("nb est different de 0 (Classe) !!!");
+									System.out.println("nb est different de 0 (Prof) !!!");
 								}
-							}	
-							else
-							{
-								System.out.println("nb est different de 0 (Prof) !!!");
+							}else{
+								System.out.println("la salle ne peut pas acceuillir cette classe il n'y a moins de sieges que d'Ã©lÃ¨ves!!!");
 							}
+							
 							
 						}
 					}
@@ -625,7 +632,7 @@ public class Vue_GestionAffectation extends JFrame implements ActionListener
 					{
 						String cle = this.tfCle.getText();
 						int nb = Modele_Affectation.delete(cle);
-						this.lbResultat.setText("Les Candidats supprimés sont :" +nb);
+						this.lbResultat.setText("Les Candidats supprimï¿½s sont :" +nb);
 						
 					}
 				}

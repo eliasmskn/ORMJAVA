@@ -325,8 +325,70 @@ public class Modele_Affectation {
 	
 	
 	
+	public static int selectcapacite(int id_salle)	
+	{
+		int capacite = 0;
+		String requete ="Select capacite from salle "
+				+ "where id_salle = '"+id_salle+"';";
+	
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+		unModele.connexion();
+		
+
+		try{
+			
+			java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+						
+						ResultSet unRes = unStat.executeQuery(requete);
+						
+							if(unRes.next())
+							{
+								capacite = unRes.getInt("capacite");
+								
+							}
+						
+						unStat.close();
+					   }
+					catch (SQLException exp)
+					{
+						JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+					}
+					unModele.deconnexion();
+			
+			return capacite;		
+	}
 	
 	
+	public static int selectnbeleve(int id_classe)	
+	{
+		int nb_eleve = 0;
+		String requete ="Select nb_eleve from classe "
+				+ "where id_classe = '"+id_classe+"';";
+	
+		Modele unModele = new Modele("127.0.0.1", "gestion_planning", "root", "");
+		unModele.connexion();
+		
+
+				try{
+						java.sql.Statement unStat =  unModele.getMaConnexion().createStatement();
+								
+						ResultSet unRes = unStat.executeQuery(requete);
+						
+							if(unRes.next())
+							{
+								nb_eleve = unRes.getInt("nb_eleve");
+								
+							}
+						
+						unStat.close();
+					}
+					catch (SQLException exp)
+					{
+						JOptionPane.showMessageDialog(null, "Erreur :"+ exp);
+					}
+					unModele.deconnexion();
+					return nb_eleve;		
+	}
 	
 	
 	public static int controleSalle(int id_salle, DatePPE date)	
